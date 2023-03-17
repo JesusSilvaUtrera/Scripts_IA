@@ -23,12 +23,12 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 # Importar el data set
-dataset = pd.read_csv('Churn_Modelling.csv')
+dataset = pd.read_csv('.\DeepLearningA_Z\practica\ANN\Churn_Modelling.csv')
 
 X = dataset.iloc[:, 3:13].values
 y = dataset.iloc[:, 13].values
 
-# Codificar datos categóricos
+# Codificar datos categóricos para pasarlos a numéricos
 from sklearn.preprocessing import LabelEncoder
 labelencoder_X_1 = LabelEncoder()
 X[:, 1] = labelencoder_X_1.fit_transform(X[:, 1])
@@ -116,8 +116,15 @@ y_pred = (y_pred>0.5)
 *   Salario estimado: $ 50000
 
 Entonces, ¿deberíamos decir adiós a ese cliente?"""
+#El modelo devuelve la probabilidad de que salga del banco el cliente 
+
+#Tener en cuenta que las vbles categóricas hay que transformarlas a numéricas igual que hemos hecho con el dataset para entrenar y testear
+#El 0,0 inicial corresponde a que no es ni del primer país (España) ni del segundo (Alemania), por lo que es de Francia (el tercero)
+#Es necesrario escalar los datos antes de pasarlos a la red también, como se hizo con los de entrenamiento
 new_prediction = classifier.predict(sc_X.transform(np.array([[0,0,600, 1, 40, 3, 60000, 2, 1, 1, 50000]])))
-new_prediction = (new_prediction > 0.5)
+print("La probabilidad de que el cliente abandone el banco es " + new_prediction)
+pred_cliente = "Yes" if new_prediction > 0.5 else "No"
+print("La predicción sobre si deberíamos decir adiós al cliente es: " + pred_cliente)
 
 # Elaborar una matriz de confusión
 from sklearn.metrics import confusion_matrix

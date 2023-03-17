@@ -68,7 +68,6 @@ X_test = sc_X.transform(X_test)
 # Parte 2 - Construir la RNA
 
 # Importar Keras y librerías adicionales
-import keras
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.layers import Dropout
